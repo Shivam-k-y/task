@@ -1,100 +1,102 @@
 import { useState } from "react";
 
 const menu = {
-    "Products": [
-      { name: "Servers", detail: "High-performance servers for all workloads." },
-      { name: "Data Storage", detail: "Reliable storage solutions for your data." },
-      { name: "Data Protection", detail: "Secure and recover your critical data." },
-      { name: "Hyperconverged Infrastructure", detail: "Integrated compute and storage." },
-      { name: "Networking", detail: "Scalable, high-speed networking hardware." },
-      { name: "Infrastructure Accessories", detail: "Cables, racks, and other hardware." },
-      { name: "AIOps & IT Observability", detail: "AI-powered monitoring and automation." },
-    ],
-    "Workloads": [
-      { name: "AI & ML", detail: "Powerful infrastructure to accelerate AI workloads." },
-      { name: "Database Management", detail: "Optimized systems for database processing." },
-      { name: "Virtualization", detail: "Solutions to virtualize your IT environment." },
-      { name: "Backup & Recovery", detail: "Efficient backup systems and disaster recovery." },
-    ],
-    "Industry": [
-      { name: "Healthcare", detail: "Secure and scalable IT for healthcare systems." },
-      { name: "Finance", detail: "Compliance-ready solutions for financial services." },
-      { name: "Education", detail: "Connected classrooms and data security in education." },
-      { name: "Manufacturing", detail: "Industrial-grade IT systems for automation." },
-    ],
-    "Payment Solutions": [
-      { name: "Subscription Billing", detail: "Automated recurring billing tools." },
-      { name: "Point-of-Sale Systems", detail: "Integrated POS hardware and software." },
-      { name: "Online Payment Gateway", detail: "Secure online transactions with ease." },
-      { name: "Fraud Detection", detail: "AI-based fraud monitoring and prevention." },
-    ],
-    "Developers & DevOps": [
-      { name: "CI/CD Tools", detail: "Automate build and deployment pipelines." },
-      { name: "API Management", detail: "Design, secure, and monitor your APIs." },
-      { name: "Dev Environments", detail: "Cloud-based development and testing environments." },
-      { name: "Monitoring & Logging", detail: "Track performance and logs in real time." },
-    ],
-  };
-  
+  Products: [
+    { name: "Servers", detail: "High-performance servers for all workloads." },
+    {
+      name: "Data Storage",
+      detail: "Reliable storage solutions for your data.",
+    },
+    { name: "Networking", detail: "Scalable, high-speed networking hardware." },
+  ],
+  Workloads: [
+    { name: "AI & ML", detail: "Powerful infrastructure for AI/ML models." },
+    {
+      name: "Backup & Recovery",
+      detail: "Efficient systems for disaster recovery.",
+    },
+  ],
+  Industry: [
+    { name: "Healthcare", detail: "Secure IT solutions for healthcare." },
+    {
+      name: "Finance",
+      detail: "Compliant infrastructure for banks and fintech.",
+    },
+  ],
+  "Payment Solutions": [
+    {
+      name: "POS Systems",
+      detail: "Modern point-of-sale devices and software.",
+    },
+    {
+      name: "Online Payment Gateway",
+      detail: "Secure and fast digital transactions.",
+    },
+  ],
+  "Developers & DevOps": [
+    { name: "CI/CD Pipelines", detail: "Automate your delivery pipelines." },
+    {
+      name: "Monitoring Tools",
+      detail: "Keep your apps observable and reliable.",
+    },
+  ],
+};
 
 export default function Dropdown() {
   const [mainHovered, setMainHovered] = useState(null);
   const [subHovered, setSubHovered] = useState(null);
 
   return (
-    <div className="relative inline-block">
-      {/* Top Bar */}
-      <div className="bg-white px-6 py-3 text-gray-800 font-semibold text-lg border-b shadow-sm">
+    <div className="relative inline-block w-full">
+      <div className="bg-white px-8 py-4 border-b shadow-sm text-gray-900 font-semibold text-xl">
         <span className="cursor-pointer">IT Infrastructure ⌄</span>
 
-        {/* Dropdown Container */}
-        <div className="absolute left-0 mt-2 flex bg-white border border-gray-200 rounded-lg shadow-2xl z-50">
-          {/* Panel 1 - Main Menu */}
-          <ul className="w-56 border-r border-gray-200 bg-gray-50 rounded-l-lg">
-            {Object.keys(menu).map((mainItem) => (
+        {/* Dropdown */}
+        <div className="absolute left-0 mt-2 flex border shadow-2xl bg-white rounded-lg z-50">
+          {/* Panel 1 */}
+          <ul className="w-64 bg-blue-50 rounded-l-lg border-r">
+            {Object.keys(menu).map((main) => (
               <li
-                key={mainItem}
+                key={main}
                 onMouseEnter={() => {
-                  setMainHovered(mainItem);
+                  setMainHovered(main);
                   setSubHovered(null);
                 }}
-                className={`px-5 py-3 hover:bg-blue-100 transition-colors duration-150 cursor-pointer ${
-                  mainHovered === mainItem ? "bg-blue-100 text-blue-800" : ""
+                className={`px-6 py-4 cursor-pointer text-blue-800 hover:bg-blue-100 transition-all ${
+                  mainHovered === main ? "bg-blue-100 font-medium" : ""
                 }`}
               >
-                {mainItem}
+                {main}
               </li>
             ))}
           </ul>
 
-          {/* Panel 2 - Sub Menu */}
+          {/* Panel 2 */}
           {mainHovered && menu[mainHovered]?.length > 0 && (
-            <ul className="w-64 border-r border-gray-200 bg-white py-2">
-              {menu[mainHovered].map((subItem) => (
+            <ul className="w-72 bg-white border-r px-6 py-4">
+              {menu[mainHovered].map((sub) => (
                 <li
-                  key={subItem.name}
-                  onMouseEnter={() => setSubHovered(subItem)}
-                  className={`px-5 py-2 hover:bg-gray-100 transition-colors duration-150 cursor-pointer ${
-                    subHovered?.name === subItem.name
+                  key={sub.name}
+                  onMouseEnter={() => setSubHovered(sub)}
+                  className={`py-2 text-gray-700 cursor-pointer hover:bg-gray-100 rounded-md px-2 transition ${
+                    subHovered?.name === sub.name
                       ? "bg-gray-100 font-medium"
                       : ""
                   }`}
                 >
-                  {subItem.name}
+                  {sub.name}
                 </li>
               ))}
             </ul>
           )}
 
-          {/* Panel 3 - Detail Box */}
+          {/* Panel 3 */}
           {subHovered && (
-            <div className="w-80 bg-gray-50 p-5 rounded-r-lg transition-all duration-200">
-              <h3 className="text-lg font-bold text-blue-700 mb-2">
+            <div className="w-96 bg-gray-50 p-6 rounded-r-lg">
+              <h3 className="text-xl font-semibold text-blue-700 mb-3">
                 {subHovered.name}
               </h3>
-              <p className="text-sm text-gray-700 leading-relaxed">
-                {subHovered.detail}
-              </p>
+              <p className="text-sm text-gray-600">{subHovered.detail}</p>
             </div>
           )}
         </div>
